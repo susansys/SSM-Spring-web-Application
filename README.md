@@ -6,4 +6,9 @@
     2. using Tomcat 8. when editing, choosing Deployment tab and select Artifact.
     3. the original webpage is index.jsp. using <welcome-file-list><welcome-file> tags to assign the homepage
 
+2. 
+    1. create entity classes and connected mySQL. Created database(schemas in mySQL). created tables. 
+
+    2. deployed Maven and SSM. tested Spring DAO 
+
 
