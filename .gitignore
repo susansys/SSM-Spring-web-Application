@@ -11,6 +11,7 @@ target
 
 #IDEA files
 catalina.*
+.idea
 
 #jpg files
 *.jpg
