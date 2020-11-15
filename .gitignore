@@ -1,1 +1,17 @@
-target/
+
+#package files
+*.jar
+*.war
+*.ear
+
+*.class
+
+#maven generated target folder
+target
+
+#IDEA files
+catalina.*
+
+#jpg files
+*.jpg
+
