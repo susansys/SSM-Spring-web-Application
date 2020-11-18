@@ -9,6 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -21,8 +22,8 @@ public class ImageUtil {
 
     /**
      * transfer CommonsMultipartFile to File
-     * @param cFile
-     * @return
+     * @param cFile CommonsMultipartFile
+     * @return newFile
      */
     public static File transferCommonsMultipartFileToFile(CommonsMultipartFile cFile){
         File newFile = new File(cFile.getOriginalFilename());
@@ -39,13 +40,13 @@ public class ImageUtil {
     }
     /**
      * solve pressed img, return the new created img's relative path
-     * @param thumbnail
-     * @param targetAddr
-     * @return
+     * @param thumbnailInputStream Input stream
+     * @param targetAddr the target address of the img.
+     * @return relativeAddr, created img's relative path
      */
-    public static String generateThumbnail(File thumbnail, String targetAddr){
+    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr){
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(thumbnail);
+        String extension = getFileExtension(fileName);
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.debug("current relativeAddr is: " + relativeAddr);
@@ -53,7 +54,7 @@ public class ImageUtil {
         logger.debug("current complete is: " + PathUtil.getImgBasePath() + relativeAddr);
 
         try {
-            Thumbnails.of(thumbnail).size(200, 200)
+            Thumbnails.of(thumbnailInputStream).size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.
                             read(new File(basePath + "/watermark.jpg")), 0.25f)
                     .outputQuality(0.8f).toFile(dest);
@@ -67,7 +68,7 @@ public class ImageUtil {
     /**
      * create the directory of the dest path. /home/work/sunsys/xxx.jpg
      * home, work, sunsys should be created automatically.
-     * @param targetAddr
+     * @param targetAddr the target address of the img.
      */
     private static void makeDirPath(String targetAddr) {
         String realFileParentPath = PathUtil.getImgBasePath() + targetAddr;
@@ -79,19 +80,18 @@ public class ImageUtil {
 
     /**
      * get input file stream extension
-     * @param cFile
-     * @return
+     * @param fileName input file
+     * @return fileExtension
      */
-    private static String getFileExtension(File cFile) {
-        String originalFileName = cFile.getName();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
      * create random file name, yyyyMMddHHmmss+random5digits
-     * @return
+     * @return the random file name
      */
-    private static String getRandomFileName() {
+    public static String getRandomFileName() {
         //get random 5 digits
         int rannum = r.nextInt(89999) + 10000;
         String nowTimeStr = sDateFormat.format(new Date());
