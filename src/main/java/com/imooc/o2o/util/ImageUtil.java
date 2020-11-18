@@ -98,6 +98,25 @@ public class ImageUtil {
         return nowTimeStr + rannum;
     }
 
+    /**
+     * storePath is or not the file path
+     * if storePath is the file path, delete the file
+     * if storePath is the directory, delete all files under this directory.
+     * @param storePath the path of storing file.
+     */
+    public static void deleteFileOrPath(String storePath) {
+        File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
+        if (fileOrPath.exists()) {
+            if(fileOrPath.isDirectory()) {
+                File files[] = fileOrPath.listFiles();
+                for(int i = 0; i < files.length; i++) {
+                    files[i].delete();
+                }
+            }
+            fileOrPath.delete();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         Thumbnails.of(new File("F:/Class-Project Resources/image SSMSrping/xiaohuangren.jpg"))
                 .size(200,200).watermark(Positions.BOTTOM_RIGHT, ImageIO
