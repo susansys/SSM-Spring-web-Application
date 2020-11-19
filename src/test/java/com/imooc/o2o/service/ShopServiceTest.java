@@ -16,12 +16,25 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class ShopServiceTest extends BaseTest {
     @Autowired
     private ShopService shopService;
+
+    @Test
+    public void testGetShopList(){
+        Shop shopCondition = new Shop();
+        ShopCategory sc = new ShopCategory();
+        sc.setShopCategoryId(1L);
+        shopCondition.setShopCategory(sc);
+        ShopExecution se = shopService.getShopList(shopCondition, 2, 2);
+        System.out.println("number of shop on the current index: " + se.getShopList().size());
+        System.out.println("total number of shop in list: " + se.getCount());
+
+    }
 
     @Test
     public void testModifyShop() throws ShopOperationException, FileNotFoundException {

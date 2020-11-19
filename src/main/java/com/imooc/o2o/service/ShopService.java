@@ -8,6 +8,15 @@ import java.io.InputStream;
 
 public interface ShopService {
     /**
+     * according to shopConditon, return the paginated shop list
+     * @param shopCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    public ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize);
+
+    /**
      * get shop info by using shop id.
      * @param shopId shopId
      * @return
