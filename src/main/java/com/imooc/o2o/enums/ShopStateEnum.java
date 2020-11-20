@@ -4,7 +4,7 @@ import com.imooc.o2o.entity.Shop;
 
 public enum ShopStateEnum {
     CHECK(0, "in review"),
-    OFFLINE(-1, "invaild"),
+    OFFLINE(-1, "invalid"),
     SUCCESS(1, "success"),
     PASS(2, "pass review"),
     INNER_ERROR(-1001, "inner program error"),
